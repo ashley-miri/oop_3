@@ -20,7 +20,7 @@ public class ConsoleIO {
         }
     }
 
-    public String readReqest(String promt) {
+    public String readPath(String promt) {
         while (true) {
             outText(promt);
             String str = scan.nextLine().trim();
