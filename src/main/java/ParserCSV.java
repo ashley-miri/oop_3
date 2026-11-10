@@ -3,14 +3,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ParserCSV implements Parser {
 
-    public List<ParserResult> parse(String path) throws IOException {
-        List<ParserResult> result = new ArrayList<>();
-
+    public void parse(String path, AnalysisReslt ana) throws IOException {
         try (
             BufferedReader reader = Files.newBufferedReader(
                 Path.of(path),
@@ -30,9 +26,8 @@ public class ParserCSV implements Parser {
                 res.setStreet(part[1]);
                 res.setHouse(part[2]);
                 res.setFloor(Integer.parseInt(part[3]));
-                result.add(res);
+                ana.collect(res);
             }
         }
-        return result;
     }
 }

@@ -1,6 +1,4 @@
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
 
@@ -9,6 +7,7 @@ public class Main {
         AnalysisReslt anl = new AnalysisReslt();
         while (true) {
             try {
+                anl.clear();
                 String path = cio.readPath(
                     "Введите путь к файлу(для выхода введите exit):"
                 );
@@ -23,8 +22,7 @@ public class Main {
                     continue;
                 }
                 long start = System.nanoTime();
-                List<ParserResult> records = parser.parse(path);
-                anl.collect(records);
+                parser.parse(path, anl);
                 long time = (System.nanoTime() - start) / 1000000;
                 cio.outText("Время обработки: " + time + " мс");
                 cio.browse(anl.getDuplicates());

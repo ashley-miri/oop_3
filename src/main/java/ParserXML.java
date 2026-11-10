@@ -2,8 +2,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
 import javax.xml.stream.XMLStreamException;
@@ -11,8 +9,7 @@ import javax.xml.stream.XMLStreamReader;
 
 public class ParserXML implements Parser {
 
-    public List<ParserResult> parse(String path) throws IOException {
-        List<ParserResult> result = new ArrayList<>();
+    public void parse(String path, AnalysisReslt ana) throws IOException {
         try (InputStream in = Files.newInputStream(Path.of(path))) {
             XMLStreamReader reader =
                 XMLInputFactory.newInstance().createXMLStreamReader(in);
@@ -32,12 +29,11 @@ public class ParserXML implements Parser {
                             reader.getAttributeValue(null, "floor")
                         )
                     );
-                    result.add(res);
+                    ana.collect(res);
                 }
             }
         } catch (XMLStreamException e) {
             throw new IOException("Ошибка разбора XML", e);
         }
-        return result;
     }
 }
